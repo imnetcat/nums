@@ -1,4 +1,7 @@
 #pragma once
+
+#include "nums.h"
+
 #include <iostream>
 #include <sstream>
 #include <set>
@@ -7,143 +10,30 @@
 #include <stdexcept>
 using namespace std;
 
-int gcd(int a, int b)
+class Rational : public Nums 
 {
-	return b ? gcd(b, a % b) : a;
-}
-int lcm(int a, int b)
-{
-	return (a*b) / gcd(a, b);
-}
-
-class Rational {
 public:
-	Rational() {
-		numerator = 0;
-		denominator = 1;
-	}
+	Rational();
+	Rational(int num, int denum);
 
-	Rational(int num, int denum) {
-		if (denum == 0)
-			throw invalid_argument{ "invalid argument" };
-		if (denum < 0)
-		{
-			num *= -1;
-			denum *= -1;
-		}
+	void setnew(int num, int denum);
 
-		int g = gcd(abs(num), abs(denum));
-		if (g != 1 && g != -1)
-		{
-			num /= g;
-			denum /= g;
-		}
-		numerator = num;
-		denominator = denum;
-	}
+	int Numerator() const;
+	int Denominator() const;
 
-	int Numerator() const {
-		return numerator;
-	}
+	void Numerator(int val);
+	void Denominator(int val);
 
-	int Denominator() const {
-		return denominator;
-	}
-
-	void Numerator(int val) {
-		numerator = val;
-	}
-
-	void Denominator(int val) {
-		denominator = val;
-	}
+	bool operator < (const Rational& rhs);
+	bool operator == (const Rational& rhs);
+	Rational operator + (const Rational& rhs);
+	Rational operator - (const Rational& rhs);
+	Rational operator * (const Rational& rhs);
+	Rational operator / (const Rational& rhs);
+	ostream & operator << (ostream& stream);
+	istream & operator >> (istream& stream);
 
 private:
 	int numerator;
 	int denominator;
 };
-
-bool operator < (const Rational& lhs, const Rational& rhs)
-{
-	int c = lcm(lhs.Denominator(), rhs.Denominator());
-	int a = lhs.Numerator() * (c / lhs.Denominator());
-	int b = rhs.Numerator() * (c / rhs.Denominator());
-	int d = a - b;
-	if (d <= 0 && c < 0)
-		return false;
-	else if (d >= 0 && c > 0)
-		return false;
-	else
-		return true;
-}
-
-bool operator == (const Rational& lhs, const Rational& rhs)
-{
-	return lhs.Numerator() == rhs.Numerator() &&
-		lhs.Denominator() == rhs.Denominator();
-}
-
-Rational operator + (const Rational& lhs, const Rational& rhs)
-{
-	if (lhs.Denominator() == rhs.Denominator())
-	{
-		return { lhs.Numerator() + rhs.Numerator(),
-			rhs.Denominator() };
-	}
-	else {
-		int c = lcm(lhs.Denominator(), rhs.Denominator());
-		int a = lhs.Numerator() * (c / lhs.Denominator());
-		int b = rhs.Numerator() * (c / rhs.Denominator());
-		return { a + b, c };
-	}
-}
-
-Rational operator - (const Rational& lhs, const Rational& rhs)
-{
-	if (lhs.Denominator() == rhs.Denominator())
-	{
-		return { lhs.Numerator() - rhs.Numerator(),
-			rhs.Denominator() };
-	}
-	else {
-		int c = lcm(lhs.Denominator(), rhs.Denominator());
-		int a = lhs.Numerator() * (c / lhs.Denominator());
-		int b = rhs.Numerator() * (c / rhs.Denominator());
-		return { a - b, c };
-	}
-}
-
-Rational operator * (const Rational& lhs, const Rational& rhs)
-{
-	return { lhs.Numerator() * rhs.Numerator(),
-		lhs.Denominator() * rhs.Denominator() };
-}
-
-Rational operator / (const Rational& lhs, const Rational& rhs)
-{
-	if (!lhs.Denominator() || !rhs.Numerator()) throw domain_error("");
-	return { lhs.Numerator() * rhs.Denominator(),
-		lhs.Denominator() * rhs.Numerator() };
-}
-
-ostream & operator << (ostream& stream, const Rational& obj)
-{
-	if (stream.good() || !stream.eof() || stream)
-	{
-		stream << obj.Numerator() << '/' << obj.Denominator();
-	}
-	return stream;
-}
-istream & operator >> (istream& stream, Rational& obj)
-{
-	int num;
-	int denum;
-	stream >> num;
-	stream.ignore(1);
-	stream >> denum;
-	if (stream.good() || !stream.eof() || stream)
-	{
-		obj = Rational(num, denum);
-	}
-	return stream;
-}
