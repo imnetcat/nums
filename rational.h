@@ -1,4 +1,5 @@
-﻿#include <iostream>
+#pragma once
+#include <iostream>
 #include <sstream>
 #include <set>
 #include <map>
@@ -6,7 +7,7 @@
 #include <stdexcept>
 using namespace std;
 
-int gcd(int a, int b) 
+int gcd(int a, int b)
 {
 	return b ? gcd(b, a % b) : a;
 }
@@ -25,7 +26,7 @@ public:
 	Rational(int num, int denum) {
 		if (denum == 0)
 			throw invalid_argument{ "invalid argument" };
-		if(denum < 0)
+		if (denum < 0)
 		{
 			num *= -1;
 			denum *= -1;
@@ -62,7 +63,7 @@ private:
 	int denominator;
 };
 
-bool operator < (const Rational& lhs, const Rational& rhs) 
+bool operator < (const Rational& lhs, const Rational& rhs)
 {
 	int c = lcm(lhs.Denominator(), rhs.Denominator());
 	int a = lhs.Numerator() * (c / lhs.Denominator());
