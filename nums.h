@@ -3,8 +3,7 @@
 class Nums 
 {
 public:
-	int gcd(int a, int b);
-	int lcm(int a, int b);
-	//virtual bool operator < (int) = 0;
+	int gcd(int a, int b) const;
+	int lcm(int a, int b) const;
 	//virtual bool operator < (double) = 0;
 };
