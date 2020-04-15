@@ -50,19 +50,25 @@ void Rational::Denominator(int val)
 	denominator = val;
 }
 
-bool Rational::operator < (const Rational& rhs)
+bool Rational::operator < (const Rational& rhs) const
 {
 	return (*this - rhs).Numerator() < 0;
 }
 
 
-bool Rational::operator == (const Rational& rhs)
+bool Rational::operator == (const Rational& rhs) const
 {
 	return this->Numerator() == rhs.Numerator() &&
 		this->Denominator() == rhs.Denominator();
 }
 
-Rational Rational::operator + (const Rational& rhs)
+bool Rational::operator != (const Rational& rhs) const
+{
+	return this->Numerator() != rhs.Numerator() ||
+		this->Denominator() != rhs.Denominator();
+}
+
+Rational Rational::operator + (const Rational& rhs) const
 {
 	if (this->Denominator() == rhs.Denominator())
 	{
@@ -77,7 +83,7 @@ Rational Rational::operator + (const Rational& rhs)
 	}
 }
 
-Rational Rational::operator - (const Rational& rhs)
+Rational Rational::operator - (const Rational& rhs) const
 {
 	if (this->Denominator() == rhs.Denominator())
 	{
@@ -92,20 +98,20 @@ Rational Rational::operator - (const Rational& rhs)
 	}
 }
 
-Rational Rational::operator * (const Rational& rhs)
+Rational Rational::operator * (const Rational& rhs) const
 {
 	return { this->Numerator() * rhs.Numerator(),
 		this->Denominator() * rhs.Denominator() };
 }
 
-Rational Rational::operator / (const Rational& rhs)
+Rational Rational::operator / (const Rational& rhs) const
 {
 	if (!this->Denominator() || !rhs.Numerator()) throw domain_error("");
 	return { this->Numerator() * rhs.Denominator(),
 		this->Denominator() * rhs.Numerator() };
 }
 
-ostream & Rational::operator << (ostream& stream)
+ostream & Rational::operator << (ostream& stream) const
 {
 	if (stream.good() || !stream.eof() || stream)
 	{
@@ -126,4 +132,13 @@ istream & Rational::operator >> (istream& stream)
 		setnew(num, denum);
 	}
 	return stream;
+}
+
+bool Rational::operator == (int rhs) const
+{
+	return *this == Rational(rhs, 1);
+}
+bool Rational::operator != (int rhs) const
+{
+	return *this != Rational(rhs, 1);
 }

@@ -24,15 +24,18 @@ public:
 	void Numerator(int val);
 	void Denominator(int val);
 
-	bool operator < (const Rational& rhs);
-	bool operator == (const Rational& rhs);
-	Rational operator + (const Rational& rhs);
-	Rational operator - (const Rational& rhs);
-	Rational operator * (const Rational& rhs);
-	Rational operator / (const Rational& rhs);
-	ostream & operator << (ostream& stream);
+	bool operator < (const Rational& rhs) const;
+	bool operator == (const Rational& rhs) const;
+	bool operator != (const Rational& rhs) const;
+	Rational operator + (const Rational& rhs) const;
+	Rational operator - (const Rational& rhs) const;
+	Rational operator * (const Rational& rhs) const;
+	Rational operator / (const Rational& rhs) const;
+	ostream & operator << (ostream& stream) const;
 	istream & operator >> (istream& stream);
 
+	bool operator == (int rhs) const;
+	bool operator != (int rhs) const;
 private:
 	int numerator;
 	int denominator;
