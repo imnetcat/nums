@@ -31,8 +31,27 @@ public:
 	Rational operator - (const Rational& rhs) const;
 	Rational operator * (const Rational& rhs) const;
 	Rational operator / (const Rational& rhs) const;
-	ostream & operator << (ostream& stream) const;
-	istream & operator >> (istream& stream);
+	friend ostream & operator << (ostream& stream, const Rational& r)
+	{
+		if (stream.good() || !stream.eof() || stream)
+		{
+			stream << r.Numerator() << '/' << r.Denominator();
+		}
+		return stream;
+	}
+	friend istream & operator >> (istream& stream, Rational& r)
+	{
+		if (stream.good() || !stream.eof() || stream)
+		{
+			int num;
+			int denum;
+			stream >> num;
+			stream.ignore(1);	 // "/"
+			stream >> denum;
+			r.setnew(num, denum);
+		}
+		return stream;
+	}
 
 	bool operator == (int rhs) const;
 	bool operator != (int rhs) const;

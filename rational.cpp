@@ -111,29 +111,6 @@ Rational Rational::operator / (const Rational& rhs) const
 		this->Denominator() * rhs.Numerator() };
 }
 
-ostream & Rational::operator << (ostream& stream) const
-{
-	if (stream.good() || !stream.eof() || stream)
-	{
-		stream << this->Numerator() << '/' << this->Denominator();
-	}
-	return stream;
-}
-
-istream & Rational::operator >> (istream& stream)
-{
-	if (stream.good() || !stream.eof() || stream)
-	{
-		int num;
-		int denum;
-		stream >> numerator;
-		stream.ignore(1);	 // "/"
-		stream >> denominator;
-		setnew(num, denum);
-	}
-	return stream;
-}
-
 bool Rational::operator == (int rhs) const
 {
 	return *this == Rational(rhs, 1);

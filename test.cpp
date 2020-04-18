@@ -8,7 +8,13 @@ int main()
 		// 
 		try
 		{
-			
+			stringstream stest;
+			Rational r1(1, 2);
+			stest << r1;
+			if (stest.str() != "1/2")
+			{
+
+			}
 		}
 		catch (exception& ex)
 		{
@@ -16,5 +22,6 @@ int main()
 		}
 	}
 
+	cout << "OK" << endl;
 	return 0;
 }
