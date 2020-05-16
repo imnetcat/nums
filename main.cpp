@@ -1,10 +1,11 @@
 #include "cli.h"
 
 
+
 int main() {
 	int init, commands;
 	cin >> init >> commands;
-	
+
 	queue<operation> queue;
 
 	while (commands)
@@ -19,14 +20,26 @@ int main() {
 
 	stringstream input_equation;
 
-	input_equation << string(queue.size(), '(') << init << ")";
+	input_equation << init;
 
+	int counter = 0;
+	operator_ last = "*";
 	while (!queue.empty())
 	{
-		input_equation << " " << queue.back().first <<  " " << queue.back().second << ")";
+		if ((queue.front().first == "/" || queue.front().first == "*") && (last == "-" || last == "+"))
+		{
+			counter++;
+			input_equation << ")";
+		}
+
+		input_equation << " " << queue.front().first << " " << queue.front().second;
+
+		last = queue.front().first;
+
 		queue.pop();
 	}
-	cout << input_equation.str();
+
+	cout << string(counter, '(') << input_equation.str();
 
 	return 0;
 }
