@@ -1,8 +1,5 @@
 #pragma once
 
-#include "rational.h"
-#include "matrix.h"
-#include "../utest/utest.h"
 
 #include <map>
 #include <string>
