@@ -1,4 +1,9 @@
 #pragma once
+
+#include "rational.h"
+#include "matrix.h"
+#include "../utest/utest.h"
+
 #include <map>
 #include <string>
 #include <algorithm>
@@ -10,21 +15,3 @@ using namespace std;
 using operator_ = string;
 using operand = int;
 using operation = pair<operator_, operand>;
-
-
-int main() {
-	int init, commands;
-	cin >> init >> commands;
-
-	queue<operation> queue;
-
-	while (commands)
-	{
-		string operation;
-		int value;
-		cin >> operation >> value;
-		--commands;
-	}
-
-	return 0;
-}
