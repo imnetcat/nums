@@ -1,45 +1,19 @@
 #include "cli.h"
 
 
-
 int main() {
-	int init, commands;
-	cin >> init >> commands;
+	string tokens;
+	cout << "Enter expression: ";
+	getline(cin, tokens);
 
-	queue<operation> queue;
+	int x = 0;
+	auto node = Parse(tokens.begin(), tokens.end(), x);
 
-	while (commands)
-	{
-		operator_ op;
-		operand value;
-		cin >> op >> value;
-		queue.push({ op , value });
-
-		--commands;
+	cout << "Enter x: ";
+	while (cin >> x) {
+		cout << "Expression value: " << node->Evaluate() << endl;
+		cout << "Enter x: ";
 	}
-
-	stringstream input_equation;
-
-	input_equation << init;
-
-	int counter = 0;
-	operator_ last = "*";
-	while (!queue.empty())
-	{
-		if ((queue.front().first == "/" || queue.front().first == "*") && (last == "-" || last == "+"))
-		{
-			counter++;
-			input_equation << ")";
-		}
-
-		input_equation << " " << queue.front().first << " " << queue.front().second;
-
-		last = queue.front().first;
-
-		queue.pop();
-	}
-
-	cout << string(counter, '(') << input_equation.str();
 
 	return 0;
 }
